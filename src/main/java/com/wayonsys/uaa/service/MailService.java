@@ -28,7 +28,7 @@ public class MailService {
 
     private final Logger log = LoggerFactory.getLogger(MailService.class);
 
-    private static final String USER = "user";
+    private static final String USER = "loginClientAPP";
 
     private static final String BASE_URL = "baseUrl";
 
@@ -66,9 +66,9 @@ public class MailService {
             log.debug("Sent email to User '{}'", to);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
-                log.warn("Email could not be sent to user '{}'", to, e);
+                log.warn("Email could not be sent to loginClientAPP '{}'", to, e);
             } else {
-                log.warn("Email could not be sent to user '{}': {}", to, e.getMessage());
+                log.warn("Email could not be sent to loginClientAPP '{}': {}", to, e.getMessage());
             }
         }
     }

@@ -3,7 +3,7 @@ package com.wayonsys.uaa.security;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * This exception is thrown in case of a not activated user trying to authenticate.
+ * This exception is thrown in case of a not activated loginClientAPP trying to authenticate.
  */
 public class UserNotActivatedException extends AuthenticationException {
 

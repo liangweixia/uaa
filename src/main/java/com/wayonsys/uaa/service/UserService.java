@@ -47,19 +47,19 @@ public class UserService {
     }
 
     public Optional<User> activateRegistration(String key) {
-        log.debug("Activating user for activation key {}", key);
+        log.debug("Activating loginClientAPP for activation key {}", key);
         return userRepository.findOneByActivationKey(key)
             .map(user -> {
-                // activate given user for the registration key.
+                // activate given loginClientAPP for the registration key.
                 user.setActivated(true);
                 user.setActivationKey(null);
-                log.debug("Activated user: {}", user);
+                log.debug("Activated loginClientAPP: {}", user);
                 return user;
             });
     }
 
     public Optional<User> completePasswordReset(String newPassword, String key) {
-        log.debug("Reset user password for reset key {}", key);
+        log.debug("Reset loginClientAPP password for reset key {}", key);
         return userRepository.findOneByResetKey(key)
             .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
             .map(user -> {
@@ -96,16 +96,16 @@ public class UserService {
         User newUser = new User();
         String encryptedPassword = passwordEncoder.encode(password);
         newUser.setLogin(userDTO.getLogin().toLowerCase());
-        // new user gets initially a generated password
+        // new loginClientAPP gets initially a generated password
         newUser.setPassword(encryptedPassword);
         newUser.setFirstName(userDTO.getFirstName());
         newUser.setLastName(userDTO.getLastName());
         newUser.setEmail(userDTO.getEmail().toLowerCase());
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
-        // new user is not active
+        // new loginClientAPP is not active
         newUser.setActivated(false);
-        // new user gets registration key
+        // new loginClientAPP gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
@@ -155,13 +155,13 @@ public class UserService {
     }
 
     /**
-     * Update basic information (first name, last name, email, language) for the current user.
+     * Update basic information (first name, last name, email, language) for the current loginClientAPP.
      *
-     * @param firstName first name of user.
-     * @param lastName  last name of user.
-     * @param email     email id of user.
+     * @param firstName first name of loginClientAPP.
+     * @param lastName  last name of loginClientAPP.
+     * @param email     email id of loginClientAPP.
      * @param langKey   language key.
-     * @param imageUrl  image URL of user.
+     * @param imageUrl  image URL of loginClientAPP.
      */
     public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
@@ -177,10 +177,10 @@ public class UserService {
     }
 
     /**
-     * Update all information for a specific user, and return the modified user.
+     * Update all information for a specific loginClientAPP, and return the modified loginClientAPP.
      *
-     * @param userDTO user to update.
-     * @return updated user.
+     * @param userDTO loginClientAPP to update.
+     * @return updated loginClientAPP.
      */
     public Optional<UserDTO> updateUser(UserDTO userDTO) {
         return Optional.of(userRepository
@@ -259,7 +259,7 @@ public class UserService {
         userRepository
             .findAllByActivatedIsFalseAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS))
             .forEach(user -> {
-                log.debug("Deleting not activated user {}", user.getLogin());
+                log.debug("Deleting not activated loginClientAPP {}", user.getLogin());
                 userRepository.delete(user);
             });
     }

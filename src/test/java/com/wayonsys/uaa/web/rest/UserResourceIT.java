@@ -197,7 +197,7 @@ public class UserResourceIT {
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
-        managedUserVM.setLogin(DEFAULT_LOGIN);// this login should already be used
+        managedUserVM.setLogin(DEFAULT_LOGIN);// this loginClientAPP should already be used
         managedUserVM.setPassword(DEFAULT_PASSWORD);
         managedUserVM.setFirstName(DEFAULT_FIRSTNAME);
         managedUserVM.setLastName(DEFAULT_LASTNAME);
@@ -258,7 +258,7 @@ public class UserResourceIT {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.[*].login").value(hasItem(DEFAULT_LOGIN)))
+            .andExpect(jsonPath("$.[*].loginClientAPP").value(hasItem(DEFAULT_LOGIN)))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRSTNAME)))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LASTNAME)))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL)))
@@ -272,11 +272,11 @@ public class UserResourceIT {
         // Initialize the database
         userRepository.saveAndFlush(user);
 
-        // Get the user
-        restUserMockMvc.perform(get("/api/users/{login}", user.getLogin()))
+        // Get the loginClientAPP
+        restUserMockMvc.perform(get("/api/users/{loginClientAPP}", user.getLogin()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.login").value(user.getLogin()))
+            .andExpect(jsonPath("$.loginClientAPP").value(user.getLogin()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRSTNAME))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LASTNAME))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL))
@@ -298,7 +298,7 @@ public class UserResourceIT {
         userRepository.saveAndFlush(user);
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
-        // Update the user
+        // Update the loginClientAPP
         User updatedUser = userRepository.findById(user.getId()).get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -340,7 +340,7 @@ public class UserResourceIT {
         userRepository.saveAndFlush(user);
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
-        // Update the user
+        // Update the loginClientAPP
         User updatedUser = userRepository.findById(user.getId()).get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -393,7 +393,7 @@ public class UserResourceIT {
         anotherUser.setLangKey("en");
         userRepository.saveAndFlush(anotherUser);
 
-        // Update the user
+        // Update the loginClientAPP
         User updatedUser = userRepository.findById(user.getId()).get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -435,12 +435,12 @@ public class UserResourceIT {
         anotherUser.setLangKey("en");
         userRepository.saveAndFlush(anotherUser);
 
-        // Update the user
+        // Update the loginClientAPP
         User updatedUser = userRepository.findById(user.getId()).get();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
         managedUserVM.setId(updatedUser.getId());
-        managedUserVM.setLogin("jhipster");// this login should already be used by anotherUser
+        managedUserVM.setLogin("jhipster");// this loginClientAPP should already be used by anotherUser
         managedUserVM.setPassword(updatedUser.getPassword());
         managedUserVM.setFirstName(updatedUser.getFirstName());
         managedUserVM.setLastName(updatedUser.getLastName());
@@ -467,8 +467,8 @@ public class UserResourceIT {
         userRepository.saveAndFlush(user);
         int databaseSizeBeforeDelete = userRepository.findAll().size();
 
-        // Delete the user
-        restUserMockMvc.perform(delete("/api/users/{login}", user.getLogin())
+        // Delete the loginClientAPP
+        restUserMockMvc.perform(delete("/api/users/{loginClientAPP}", user.getLogin())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isNoContent());
 

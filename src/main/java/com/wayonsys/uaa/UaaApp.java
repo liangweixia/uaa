@@ -6,15 +6,19 @@ import com.wayonsys.uaa.config.DefaultProfileUtil;
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
+import org.mybatis.spring.annotation.MapperScan;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.core.env.Environment;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -24,6 +28,14 @@ import java.util.Collection;
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
 @EnableDiscoveryClient
+@EntityScan(
+    basePackages = {"com.wayonsys"}
+)
+@EnableJpaRepositories(
+    basePackages = {"com.wayonsys"}
+)
+@MapperScan("com.wayonsys.account.*.mapper")
+@EnableFeignClients("com.wayonsys.account.*")
 public class UaaApp implements InitializingBean {
 
     private static final Logger log = LoggerFactory.getLogger(UaaApp.class);

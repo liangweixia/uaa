@@ -133,7 +133,7 @@ public class AccountResourceIT {
             .accept(MediaType.APPLICATION_JSON))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-            .andExpect(jsonPath("$.login").value("test"))
+            .andExpect(jsonPath("$.loginClientAPP").value("test"))
             .andExpect(jsonPath("$.firstName").value("john"))
             .andExpect(jsonPath("$.lastName").value("doe"))
             .andExpect(jsonPath("$.email").value("john.doe@jhipster.com"))
@@ -284,7 +284,7 @@ public class AccountResourceIT {
         firstUser.setLangKey(Constants.DEFAULT_LANGUAGE);
         firstUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        // Duplicate login, different email
+        // Duplicate loginClientAPP, different email
         ManagedUserVM secondUser = new ManagedUserVM();
         secondUser.setLogin(firstUser.getLogin());
         secondUser.setPassword(firstUser.getPassword());
@@ -299,14 +299,14 @@ public class AccountResourceIT {
         secondUser.setLastModifiedDate(firstUser.getLastModifiedDate());
         secondUser.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
 
-        // First user
+        // First loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
                 .content(TestUtil.convertObjectToJsonBytes(firstUser)))
             .andExpect(status().isCreated());
 
-        // Second (non activated) user
+        // Second (non activated) loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -318,7 +318,7 @@ public class AccountResourceIT {
         testUser.get().setActivated(true);
         userRepository.save(testUser.get());
 
-        // Second (already activated) user
+        // Second (already activated) loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -329,7 +329,7 @@ public class AccountResourceIT {
     @Test
     @Transactional
     public void testRegisterDuplicateEmail() throws Exception {
-        // First user
+        // First loginClientAPP
         ManagedUserVM firstUser = new ManagedUserVM();
         firstUser.setLogin("test-register-duplicate-email");
         firstUser.setPassword("password");
@@ -340,7 +340,7 @@ public class AccountResourceIT {
         firstUser.setLangKey(Constants.DEFAULT_LANGUAGE);
         firstUser.setAuthorities(Collections.singleton(AuthoritiesConstants.USER));
 
-        // Register first user
+        // Register first loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -350,7 +350,7 @@ public class AccountResourceIT {
         Optional<User> testUser1 = userRepository.findOneByLogin("test-register-duplicate-email");
         assertThat(testUser1.isPresent()).isTrue();
 
-        // Duplicate email, different login
+        // Duplicate email, different loginClientAPP
         ManagedUserVM secondUser = new ManagedUserVM();
         secondUser.setLogin("test-register-duplicate-email-2");
         secondUser.setPassword(firstUser.getPassword());
@@ -361,7 +361,7 @@ public class AccountResourceIT {
         secondUser.setLangKey(firstUser.getLangKey());
         secondUser.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
 
-        // Register second (non activated) user
+        // Register second (non activated) loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -386,7 +386,7 @@ public class AccountResourceIT {
         userWithUpperCaseEmail.setLangKey(firstUser.getLangKey());
         userWithUpperCaseEmail.setAuthorities(new HashSet<>(firstUser.getAuthorities()));
 
-        // Register third (not activated) user
+        // Register third (not activated) loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -400,7 +400,7 @@ public class AccountResourceIT {
         testUser4.get().setActivated(true);
         userService.updateUser((new UserDTO(testUser4.get())));
 
-        // Register 4th (already activated) user
+        // Register 4th (already activated) loginClientAPP
         restMvc.perform(
             post("/api/register")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -573,11 +573,11 @@ public class AccountResourceIT {
 
     @Test
     @Transactional
-    @WithMockUser("save-existing-email-and-login")
+    @WithMockUser("save-existing-email-and-loginClientAPP")
     public void testSaveExistingEmailAndLogin() throws Exception {
         User user = new User();
-        user.setLogin("save-existing-email-and-login");
-        user.setEmail("save-existing-email-and-login@example.com");
+        user.setLogin("save-existing-email-and-loginClientAPP");
+        user.setEmail("save-existing-email-and-loginClientAPP@example.com");
         user.setPassword(RandomStringUtils.random(60));
         user.setActivated(true);
 
@@ -587,7 +587,7 @@ public class AccountResourceIT {
         userDTO.setLogin("not-used");
         userDTO.setFirstName("firstname");
         userDTO.setLastName("lastname");
-        userDTO.setEmail("save-existing-email-and-login@example.com");
+        userDTO.setEmail("save-existing-email-and-loginClientAPP@example.com");
         userDTO.setActivated(false);
         userDTO.setImageUrl("http://placehold.it/50x50");
         userDTO.setLangKey(Constants.DEFAULT_LANGUAGE);
@@ -599,8 +599,8 @@ public class AccountResourceIT {
                 .content(TestUtil.convertObjectToJsonBytes(userDTO)))
             .andExpect(status().isOk());
 
-        User updatedUser = userRepository.findOneByLogin("save-existing-email-and-login").orElse(null);
-        assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-login@example.com");
+        User updatedUser = userRepository.findOneByLogin("save-existing-email-and-loginClientAPP").orElse(null);
+        assertThat(updatedUser.getEmail()).isEqualTo("save-existing-email-and-loginClientAPP@example.com");
     }
 
     @Test

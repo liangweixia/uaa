@@ -18,7 +18,7 @@ import java.util.Locale;
 import java.util.Set;
 
 /**
- * A user.
+ * A loginClientAPP.
  */
 @Entity
 @Table(name = "jhi_user")
@@ -102,7 +102,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
         return login;
     }
 
-    // Lowercase the login before saving it in database
+    // Lowercase the loginClientAPP before saving it in database
     public void setLogin(String login) {
         this.login = StringUtils.lowerCase(login, Locale.ENGLISH);
     }
@@ -214,7 +214,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-            "login='" + login + '\'' +
+            "loginClientAPP='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +

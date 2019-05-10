@@ -52,7 +52,7 @@ public class CustomAuditEventRepositoryIT {
         Instant oneHourAgo = Instant.now().minusSeconds(3600);
 
         testUserEvent = new PersistentAuditEvent();
-        testUserEvent.setPrincipal("test-user");
+        testUserEvent.setPrincipal("test-loginClientAPP");
         testUserEvent.setAuditEventType("test-type");
         testUserEvent.setAuditEventDate(oneHourAgo);
         Map<String, String> data = new HashMap<>();
@@ -60,12 +60,12 @@ public class CustomAuditEventRepositoryIT {
         testUserEvent.setData(data);
 
         testOldUserEvent = new PersistentAuditEvent();
-        testOldUserEvent.setPrincipal("test-user");
+        testOldUserEvent.setPrincipal("test-loginClientAPP");
         testOldUserEvent.setAuditEventType("test-type");
         testOldUserEvent.setAuditEventDate(oneHourAgo.minusSeconds(10000));
 
         testOtherUserEvent = new PersistentAuditEvent();
-        testOtherUserEvent.setPrincipal("other-test-user");
+        testOtherUserEvent.setPrincipal("other-test-loginClientAPP");
         testOtherUserEvent.setAuditEventType("test-type");
         testOtherUserEvent.setAuditEventDate(oneHourAgo);
     }
@@ -74,7 +74,7 @@ public class CustomAuditEventRepositoryIT {
     public void addAuditEvent() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", "test-value");
-        AuditEvent event = new AuditEvent("test-user", "test-type", data);
+        AuditEvent event = new AuditEvent("test-loginClientAPP", "test-type", data);
         customAuditEventRepository.add(event);
         List<PersistentAuditEvent> persistentAuditEvents = persistenceAuditEventRepository.findAll();
         assertThat(persistentAuditEvents).hasSize(1);
@@ -95,7 +95,7 @@ public class CustomAuditEventRepositoryIT {
             largeData.append("a");
         }
         data.put("test-key", largeData);
-        AuditEvent event = new AuditEvent("test-user", "test-type", data);
+        AuditEvent event = new AuditEvent("test-loginClientAPP", "test-type", data);
         customAuditEventRepository.add(event);
         List<PersistentAuditEvent> persistentAuditEvents = persistenceAuditEventRepository.findAll();
         assertThat(persistentAuditEvents).hasSize(1);
@@ -119,7 +119,7 @@ public class CustomAuditEventRepositoryIT {
         WebAuthenticationDetails details = new WebAuthenticationDetails(request);
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", details);
-        AuditEvent event = new AuditEvent("test-user", "test-type", data);
+        AuditEvent event = new AuditEvent("test-loginClientAPP", "test-type", data);
         customAuditEventRepository.add(event);
         List<PersistentAuditEvent> persistentAuditEvents = persistenceAuditEventRepository.findAll();
         assertThat(persistentAuditEvents).hasSize(1);
@@ -132,7 +132,7 @@ public class CustomAuditEventRepositoryIT {
     public void testAddEventWithNullData() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", null);
-        AuditEvent event = new AuditEvent("test-user", "test-type", data);
+        AuditEvent event = new AuditEvent("test-loginClientAPP", "test-type", data);
         customAuditEventRepository.add(event);
         List<PersistentAuditEvent> persistentAuditEvents = persistenceAuditEventRepository.findAll();
         assertThat(persistentAuditEvents).hasSize(1);
@@ -154,7 +154,7 @@ public class CustomAuditEventRepositoryIT {
     public void addAuditEventWithAuthorizationFailureType() {
         Map<String, Object> data = new HashMap<>();
         data.put("test-key", "test-value");
-        AuditEvent event = new AuditEvent("test-user", "AUTHORIZATION_FAILURE", data);
+        AuditEvent event = new AuditEvent("test-loginClientAPP", "AUTHORIZATION_FAILURE", data);
         customAuditEventRepository.add(event);
         List<PersistentAuditEvent> persistentAuditEvents = persistenceAuditEventRepository.findAll();
         assertThat(persistentAuditEvents).hasSize(0);

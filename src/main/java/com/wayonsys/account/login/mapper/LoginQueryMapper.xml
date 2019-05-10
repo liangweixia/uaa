@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wayonsys.account.login.mapper.LoginQueryMapper">
+
+    <select id="findLoginList" parameterType="com.wayonsys.account.login.vo.LoginQuery" resultType="com.wayonsys.account.login.vo.LoginRecord" statementType="PREPARED">
+        select id,login_id,tenant_id,mobile,status,name
+        <include refid="findUserListFrom"/>
+        order by id desc
+        <if test="size != 0 and offset >= 0">
+        limit #{offset},#{size};
+        </if>
+    </select>
+
+    <select id="findLoginListCount" parameterType="com.wayonsys.account.login.vo.LoginQuery" resultType="Integer" statementType="PREPARED">
+        select count(*)
+        <include refid="findUserListFrom"/>
+    </select>
+
+    <sql id="findUserListFrom">
+        from user t1
+        <where>
+            <if test="tenantId != null">
+                and t1.tenant_id = #{tenantId}
+            </if>
+        </where>
+    </sql>
+</mapper>

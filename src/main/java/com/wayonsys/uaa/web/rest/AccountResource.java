@@ -23,7 +23,7 @@ import javax.validation.Valid;
 import java.util.*;
 
 /**
- * REST controller for managing the current user's account.
+ * REST controller for managing the current loginClientAPP's account.
  */
 @RestController
 @RequestMapping("/api")
@@ -51,12 +51,12 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST  /register} : register the user.
+     * {@code POST  /register} : register the loginClientAPP.
      *
-     * @param managedUserVM the managed user View Model.
+     * @param managedUserVM the managed loginClientAPP View Model.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
-     * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
+     * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the loginClientAPP is already used.
      */
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
@@ -69,36 +69,36 @@ public class AccountResource {
     }
 
     /**
-     * {@code GET  /activate} : activate the registered user.
+     * {@code GET  /activate} : activate the registered loginClientAPP.
      *
      * @param key the activation key.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be activated.
+     * @throws RuntimeException {@code 500 (Internal Server Error)} if the loginClientAPP couldn't be activated.
      */
     @GetMapping("/activate")
     public void activateAccount(@RequestParam(value = "key") String key) {
         Optional<User> user = userService.activateRegistration(key);
         if (!user.isPresent()) {
-            throw new AccountResourceException("No user was found for this activation key");
+            throw new AccountResourceException("No loginClientAPP was found for this activation key");
         }
     }
 
     /**
-     * {@code GET  /authenticate} : check if the user is authenticated, and return its login.
+     * {@code GET  /authenticate} : check if the loginClientAPP is authenticated, and return its loginClientAPP.
      *
      * @param request the HTTP request.
-     * @return the login if the user is authenticated.
+     * @return the loginClientAPP if the loginClientAPP is authenticated.
      */
     @GetMapping("/authenticate")
     public String isAuthenticated(HttpServletRequest request) {
-        log.debug("REST request to check if the current user is authenticated");
+        log.debug("REST request to check if the current loginClientAPP is authenticated");
         return request.getRemoteUser();
     }
 
     /**
-     * {@code GET  /account} : get the current user.
+     * {@code GET  /account} : get the current loginClientAPP.
      *
-     * @return the current user.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user couldn't be returned.
+     * @return the current loginClientAPP.
+     * @throws RuntimeException {@code 500 (Internal Server Error)} if the loginClientAPP couldn't be returned.
      */
     @GetMapping("/account")
     public UserDTO getAccount() {
@@ -108,15 +108,15 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST  /account} : update the current user information.
+     * {@code POST  /account} : update the current loginClientAPP information.
      *
-     * @param userDTO the current user information.
+     * @param userDTO the current loginClientAPP information.
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
-     * @throws RuntimeException {@code 500 (Internal Server Error)} if the user login wasn't found.
+     * @throws RuntimeException {@code 500 (Internal Server Error)} if the loginClientAPP loginClientAPP wasn't found.
      */
     @PostMapping("/account")
     public void saveAccount(@Valid @RequestBody UserDTO userDTO) {
-        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"));
+        String userLogin = SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current loginClientAPP loginClientAPP not found"));
         Optional<User> existingUser = userRepository.findOneByEmailIgnoreCase(userDTO.getEmail());
         if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userLogin))) {
             throw new EmailAlreadyUsedException();
@@ -130,7 +130,7 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST  /account/change-password} : changes the current user's password.
+     * {@code POST  /account/change-password} : changes the current loginClientAPP's password.
      *
      * @param passwordChangeDto current and new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the new password is incorrect.
@@ -144,9 +144,9 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST   /account/reset-password/init} : Send an email to reset the password of the user.
+     * {@code POST   /account/reset-password/init} : Send an email to reset the password of the loginClientAPP.
      *
-     * @param mail the mail of the user.
+     * @param mail the mail of the loginClientAPP.
      * @throws EmailNotFoundException {@code 400 (Bad Request)} if the email address is not registered.
      */
     @PostMapping(path = "/account/reset-password/init")
@@ -158,7 +158,7 @@ public class AccountResource {
     }
 
     /**
-     * {@code POST   /account/reset-password/finish} : Finish to reset the password of the user.
+     * {@code POST   /account/reset-password/finish} : Finish to reset the password of the loginClientAPP.
      *
      * @param keyAndPassword the generated key and the new password.
      * @throws InvalidPasswordException {@code 400 (Bad Request)} if the password is incorrect.
@@ -173,7 +173,7 @@ public class AccountResource {
             userService.completePasswordReset(keyAndPassword.getNewPassword(), keyAndPassword.getKey());
 
         if (!user.isPresent()) {
-            throw new AccountResourceException("No user was found for this reset key");
+            throw new AccountResourceException("No loginClientAPP was found for this reset key");
         }
     }
 

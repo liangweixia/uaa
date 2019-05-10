@@ -14,7 +14,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * A DTO representing a user, with his authorities.
+ * A DTO representing a loginClientAPP, with his authorities.
  */
 public class UserDTO {
 
@@ -182,7 +182,7 @@ public class UserDTO {
     @Override
     public String toString() {
         return "UserDTO{" +
-            "login='" + login + '\'' +
+            "loginClientAPP='" + login + '\'' +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +

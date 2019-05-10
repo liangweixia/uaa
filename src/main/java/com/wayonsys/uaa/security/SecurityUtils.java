@@ -15,9 +15,9 @@ public final class SecurityUtils {
     }
 
     /**
-     * Get the login of the current user.
+     * Get the loginClientAPP of the current loginClientAPP.
      *
-     * @return the login of the current user.
+     * @return the loginClientAPP of the current loginClientAPP.
      */
     public static Optional<String> getCurrentUserLogin() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -34,9 +34,9 @@ public final class SecurityUtils {
     }
 
     /**
-     * Check if a user is authenticated.
+     * Check if a loginClientAPP is authenticated.
      *
-     * @return true if the user is authenticated, false otherwise.
+     * @return true if the loginClientAPP is authenticated, false otherwise.
      */
     public static boolean isAuthenticated() {
         SecurityContext securityContext = SecurityContextHolder.getContext();
@@ -47,12 +47,12 @@ public final class SecurityUtils {
     }
 
     /**
-     * If the current user has a specific authority (security role).
+     * If the current loginClientAPP has a specific authority (security role).
      * <p>
      * The name of this method comes from the {@code isUserInRole()} method in the Servlet API.
      *
      * @param authority the authority to check.
-     * @return true if the current user has the authority, false otherwise.
+     * @return true if the current loginClientAPP has the authority, false otherwise.
      */
     public static boolean isCurrentUserInRole(String authority) {
         SecurityContext securityContext = SecurityContextHolder.getContext();

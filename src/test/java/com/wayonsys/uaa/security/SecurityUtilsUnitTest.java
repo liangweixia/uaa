@@ -52,7 +52,7 @@ public class SecurityUtilsUnitTest {
         SecurityContext securityContext = SecurityContextHolder.createEmptyContext();
         Collection<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(AuthoritiesConstants.USER));
-        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("user", "user", authorities));
+        securityContext.setAuthentication(new UsernamePasswordAuthenticationToken("loginClientAPP", "loginClientAPP", authorities));
         SecurityContextHolder.setContext(securityContext);
 
         assertThat(SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.USER)).isTrue();

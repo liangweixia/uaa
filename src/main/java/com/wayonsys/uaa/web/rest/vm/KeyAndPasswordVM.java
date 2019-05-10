@@ -1,7 +1,7 @@
 package com.wayonsys.uaa.web.rest.vm;
 
 /**
- * View Model object for storing the user's key and password.
+ * View Model object for storing the loginClientAPP's key and password.
  */
 public class KeyAndPasswordVM {
 
